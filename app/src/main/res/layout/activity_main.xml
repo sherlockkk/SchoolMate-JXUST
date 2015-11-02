@@ -18,6 +18,7 @@
             android:text="姓        名"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -37,6 +38,7 @@
             android:text="专        业"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/major"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -57,6 +59,7 @@
             android:text="班        级"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/clazz"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -97,6 +100,7 @@
             android:text="工作单位"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/company"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -117,6 +121,7 @@
             android:text="通讯地址"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

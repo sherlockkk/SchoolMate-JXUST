@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.alpha.schoolmate.R;
@@ -17,8 +18,14 @@ import com.lody.welike.ui.WelikeToast;
 
 public class MainActivity extends Activity {
 
-    private Button btn_Query;
-    private Spinner btn_Spinner;
+    private Button mButton_Query;
+    private Spinner mSpinner;
+    private EditText mEditText_name;
+    private EditText mEditText_major;
+    private EditText mEditText_clazz;
+    private EditText mEditText_company;
+    private EditText mEditText_address;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,27 +37,54 @@ public class MainActivity extends Activity {
     }
 
 	/*
-	 * 初始化
+     * 初始化
 	 */
 
     private void init() {
-        btn_Query = (Button) findViewById(R.id.submit);
-        btn_Spinner = (Spinner) findViewById(R.id.spinner);
-        btn_Query.setOnClickListener(onClickListener);
-        btn_Spinner.setOnItemSelectedListener(onItemSelectedListener);
+        mButton_Query = (Button) findViewById(R.id.submit);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
+        mEditText_name = (EditText) findViewById(R.id.name);
+        mEditText_major = (EditText) findViewById(R.id.major);
+        mEditText_clazz = (EditText) findViewById(R.id.clazz);
+        mEditText_company = (EditText) findViewById(R.id.company);
+        mEditText_address = (EditText) findViewById(R.id.address);
+
+        mButton_Query.setOnClickListener(onClickListener);
+        mSpinner.setOnItemSelectedListener(onItemSelectedListener);
         String[] mItem = getResources().getStringArray(R.array.selector_years);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, mItem);
-        btn_Spinner.setAdapter(spinnerAdapter);
+        mSpinner.setAdapter(spinnerAdapter);
     }
 
-    OnClickListener onClickListener = new OnClickListener() {
+    OnClickListener onClickListener;
 
-        @Override
-        public void onClick(View v) {
-            System.out.println(">>>>>>>>>>>>>>>>>");
-        }
-    };
+    {
+        onClickListener = new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String name = null;
+                String major = null;
+                String clazz = null;
+                String company = null;
+                String address = null;
+                String years = null;
+                switch (v.getId()) {
+                    case R.id.submit:
+                        name = mEditText_name.getText().toString();
+                        major = mEditText_major.getText().toString();
+                        clazz = mEditText_clazz.getText().toString();
+                        company = mEditText_company.getText().toString();
+                        address = mEditText_address.getText().toString();
+                        years = mSpinner.getSelectedItem().toString();
+                        break;
+                }
+                System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
+
+            }
+        };
+    }
 
     OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {
 
