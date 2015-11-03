@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -14,7 +13,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.alpha.schoolmate.R;
+import com.alpha.schoolmate.util.Config;
+import com.alpha.schoolmate.util.HttpUtils;
 import com.lody.welike.ui.WelikeToast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity {
 
@@ -80,10 +84,25 @@ public class MainActivity extends Activity {
                         years = mSpinner.getSelectedItem().toString();
                         break;
                 }
+                Map<String, String> params = new HashMap<String,String>();
+                params.put("", name);
+                params.put("", major);
+                params.put("", clazz);
+                params.put("", years);
+                params.put("", company);
+                params.put("", address);
+                sendPost(params);
                 System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
 
             }
         };
+    }
+
+    private void sendPost(Map<String, String> params) {
+        // Map<String ,String>params = new HashMap<String,String>();
+
+        String urlPath = Config.URLPATH;
+        HttpUtils.submitPostData(urlPath, params, "utf-8");
     }
 
     OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {
