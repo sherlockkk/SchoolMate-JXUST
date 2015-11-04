@@ -1,6 +1,7 @@
 package com.alpha.schoolmate.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,10 @@ import android.widget.Spinner;
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.util.Config;
 import com.alpha.schoolmate.util.HttpUtils;
+import com.lody.welike.WelikeHttp;
+import com.lody.welike.http.HttpParams;
+import com.lody.welike.http.HttpRequest;
+import com.lody.welike.http.callback.HttpCallback;
 import com.lody.welike.ui.WelikeToast;
 
 import java.util.HashMap;
@@ -82,9 +87,10 @@ public class MainActivity extends Activity {
                         company = mEditText_company.getText().toString();
                         address = mEditText_address.getText().toString();
                         years = mSpinner.getSelectedItem().toString();
+                        toActivity();
                         break;
                 }
-                Map<String, String> params = new HashMap<String,String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("", name);
                 params.put("", major);
                 params.put("", clazz);
@@ -98,9 +104,13 @@ public class MainActivity extends Activity {
         };
     }
 
+    private void toActivity() {
+        Intent intent = new Intent(MainActivity.this, ListActivity.class);
+        startActivity(intent);
+    }
+
     private void sendPost(Map<String, String> params) {
         // Map<String ,String>params = new HashMap<String,String>();
-
         String urlPath = Config.URLPATH;
         HttpUtils.submitPostData(urlPath, params, "utf-8");
     }
