@@ -5,20 +5,28 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.alpha.schoolmate.R;
+import com.alpha.schoolmate.adapter.MyAdapter;
 import com.lody.welike.ui.WelikeActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by SongJian on 2015/11/4 0004.
  */
 public class ListActivity extends Activity {
-    private TableLayout mTableLayout;
-    private Button mButton;
-    private int num = 0;
+    public static String title[] = new String[]{"菜名0", "菜名1", "菜名2", "菜名3", "菜名4", "菜名5", "菜名6", "菜名7", "菜名8", "菜名9"};
+    public static String info[] = new String[]{"￥：28", "￥：28", "￥：28", "￥：28", "￥：28", "￥：28", "￥：28", "￥：28", "￥：28", "￥：28",};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,35 +36,24 @@ public class ListActivity extends Activity {
     }
 
     public void initWidget() {
-        mTableLayout = (TableLayout) findViewById(R.id.tableLayout);
-        mButton = (Button) findViewById(R.id.btnAdd);
-        mButton.setOnClickListener(onClickListener);
+        ListView listView = (ListView) findViewById(R.id.listview);
+        MyAdapter myAdapter = new MyAdapter(this);
+        listView.setAdapter(myAdapter);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            addRow();
-            num++;
+    //动态获取数据源，可以是数组，json等
+    public List<Map<String, Object>> getData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < title.length; i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", title[i]);
+            map.put("major", info[i]);
+            list.add(map);
         }
-    };
+        return list;
+    }
 
-    private void addRow() {
-        TableRow tableRow = new TableRow(this);
-        TextView textView = new TextView(this);
-        Button button = new Button(this);
+    public void showInfo(int position) {
 
-        textView.setText(String.valueOf(num));
-        button.setText("删除");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TableRow tableRow = (TableRow) v.getParent();
-                mTableLayout.removeView(tableRow);
-            }
-        });
-        tableRow.addView(textView);
-        tableRow.addView(button);
-        mTableLayout.addView(tableRow);
     }
 }

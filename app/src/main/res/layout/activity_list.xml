@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:background="@android:color/holo_blue_dark">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="姓名"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="专业"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="详情"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        />
+</LinearLayout>
+<ListView
+    android:id="@+id/listview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></ListView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="0">
-
-        </TableLayout>
-    </ScrollView>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="add" />
-
-</RelativeLayout>
+</LinearLayout>
