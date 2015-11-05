@@ -5,6 +5,10 @@ import android.util.Log;
 import com.alpha.schoolmate.activity.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lody.welike.WelikeHttp;
+import com.lody.welike.http.HttpParams;
+import com.lody.welike.http.callback.HttpResultCallback;
+import com.lody.welike.ui.WelikeToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,16 +69,16 @@ public class JsonUtil {
 //        Log.i("hck", "转换成json字符串: " + jsonString);
 //
 //    }
-    public void changeNotArrayDateToJson(Map<String, String> params) {
+    public String changeNotArrayDateToJson(Map<String, String> params) {
         //JSONObject object=null;
         JSONObject object = new JSONObject();
         try {
+            object.put("SpecialityName", params.get("SpecialityName"));
             object.put("RealName", params.get("RealName"));
-            object.put("SpecialityName", params.get("RealName"));
-            object.put("ClassName", params.get("RealName"));
-            object.put("Graduation", params.get("RealName"));
-            object.put("WorkPlace", params.get("RealName"));
-            object.put("Address", params.get("RealName"));
+            object.put("ClassName", params.get("ClassName"));
+            object.put("Graduation", params.get("Graduation"));
+            object.put("WorkPlace", params.get("WorkPlace"));
+            object.put("Address", params.get("Address"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -82,5 +86,15 @@ public class JsonUtil {
         String jsonString2 = object.toString();//把JSONObject转换成json格式的字符串
         Log.i("hck", "转换成json字符串: " + jsonString2);
 
+        HttpParams httpParams  = new HttpParams().putParams(jsonString2);
+
+        WelikeHttp.getDefault().post(Config.URLPATH, httpParams, new HttpResultCallback() {
+            @Override
+            public void onSuccess(String content) {
+                super.onSuccess(content);
+                WelikeToast.toast(content);
+            }
+        });
+        return jsonString2;
     }
 }

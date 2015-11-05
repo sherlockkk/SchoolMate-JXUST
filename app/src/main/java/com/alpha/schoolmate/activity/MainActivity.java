@@ -95,6 +95,8 @@ public class MainActivity extends Activity {
 //                        progressDialog.setTitle("正在查询");
 //                        progressDialog.setMessage("查询中...");
 
+                       // WelikeHttp.getDefault().post(Config.URLPATH,);
+
                         toActivity();
                         break;
                 }
@@ -105,7 +107,7 @@ public class MainActivity extends Activity {
                 params.put("Graduation", years);
                 params.put("WorkPlace", company);
                 params.put("Address", address);
-                sendPost(params);
+                //sendPost(params);
                 System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
                 JsonUtil jsonUtil = new JsonUtil();
                 jsonUtil.changeNotArrayDateToJson(params);
@@ -119,8 +121,8 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+
     private void sendPost(Map<String, String> params) {
-        // Map<String ,String>params = new HashMap<String,String>();
         String urlPath = Config.URLPATH;
         HttpUtils.submitPostData(urlPath, params, "utf-8");
     }
