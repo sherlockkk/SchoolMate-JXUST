@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.adapter.MyAdapter;
+import com.alpha.schoolmate.adapter.ViewHolder;
 import com.lody.welike.ui.WelikeActivity;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class ListActivity extends Activity {
         MyAdapter myAdapter = new MyAdapter(this);
         listView.setAdapter(myAdapter);
     }
+
 
     //动态获取数据源，可以是数组，json等
     public List<Map<String, Object>> getData() {

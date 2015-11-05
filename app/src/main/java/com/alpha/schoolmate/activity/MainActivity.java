@@ -1,6 +1,7 @@
 package com.alpha.schoolmate.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.util.Config;
 import com.alpha.schoolmate.util.HttpUtils;
+import com.alpha.schoolmate.util.JsonUtil;
 import com.lody.welike.WelikeHttp;
 import com.lody.welike.http.HttpParams;
 import com.lody.welike.http.HttpRequest;
@@ -68,17 +70,18 @@ public class MainActivity extends Activity {
 
     OnClickListener onClickListener;
 
+    public String  name = null;
+    public String major = null;
+    public String clazz = null;
+    public String company = null;
+    public String address = null;
+    public String years = null;
     {
         onClickListener = new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String name = null;
-                String major = null;
-                String clazz = null;
-                String company = null;
-                String address = null;
-                String years = null;
+
                 switch (v.getId()) {
                     case R.id.submit:
                         name = mEditText_name.getText().toString();
@@ -87,18 +90,25 @@ public class MainActivity extends Activity {
                         company = mEditText_company.getText().toString();
                         address = mEditText_address.getText().toString();
                         years = mSpinner.getSelectedItem().toString();
+
+//                        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+//                        progressDialog.setTitle("正在查询");
+//                        progressDialog.setMessage("查询中...");
+
                         toActivity();
                         break;
                 }
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("", name);
-                params.put("", major);
-                params.put("", clazz);
-                params.put("", years);
-                params.put("", company);
-                params.put("", address);
+                params.put("RealName", name);
+                params.put("SpecialityName", major);
+                params.put("ClassName", clazz);
+                params.put("Graduation", years);
+                params.put("WorkPlace", company);
+                params.put("Address", address);
                 sendPost(params);
                 System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
+                JsonUtil jsonUtil = new JsonUtil();
+                jsonUtil.changeNotArrayDateToJson(params);
 
             }
         };

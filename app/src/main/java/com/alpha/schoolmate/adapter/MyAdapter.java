@@ -56,6 +56,8 @@ public class MyAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.mTvName.setText((String)mData.get(position).get("name"));
+        viewHolder.mTvMajor.setText((String)mData.get(position).get("major"));
         return convertView;
     }
 }
