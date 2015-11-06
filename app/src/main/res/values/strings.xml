@@ -6,6 +6,7 @@
 
     <string-array
         name="selector_years">
+        <item></item>
         <item >1960</item>
         <item >1961</item>
         <item >1962</item>

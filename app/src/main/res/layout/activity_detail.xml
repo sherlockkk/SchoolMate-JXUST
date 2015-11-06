@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="详细信息"
+        android:textSize="18sp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:gravity="center"/>
+
+
+<ListView
+    android:id="@+id/listview_detail"
+    android:layout_below="@id/detail_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></ListView>
+</RelativeLayout>

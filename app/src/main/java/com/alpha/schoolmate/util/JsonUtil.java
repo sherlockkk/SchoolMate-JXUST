@@ -1,9 +1,13 @@
 package com.alpha.schoolmate.util;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.alpha.schoolmate.activity.MainActivity;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.lody.welike.WelikeHttp;
 import com.lody.welike.http.HttpParams;
@@ -35,7 +39,7 @@ public class JsonUtil {
     }
 
     //写入Json数据,转换为String对象
-    public String getJsonData(List<?> list) {
+    public String getJsonDataToString(List<?> list) {
         Gson gson = new Gson();
         String stringJson = gson.toJson(list);
         return stringJson;
@@ -82,19 +86,30 @@ public class JsonUtil {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         String jsonString2 = object.toString();//把JSONObject转换成json格式的字符串
-        Log.i("hck", "转换成json字符串: " + jsonString2);
-
-        HttpParams httpParams  = new HttpParams().putParams(jsonString2);
-
-        WelikeHttp.getDefault().post(Config.URLPATH, httpParams, new HttpResultCallback() {
-            @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                WelikeToast.toast(content);
-            }
-        });
+        Log.i("sj", "转换成json字符串: " + jsonString2);
         return jsonString2;
     }
+    //解析json数组
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public String jsonArrayToString(JSONArray jsonData){
+        try {
+            JSONArray jsonArray = new JSONArray(jsonData);
+            for (int i = 0;i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String realName = jsonObject.getString("RealName");
+                String className = jsonObject.getString("ClassName");
+                String graduation = jsonObject.getString("Graduation");
+                String specialityName = jsonObject.getString("SpecialityName");
+                String workPlace = jsonObject.getString("WorkPlace");
+                String birthday = jsonObject.getString("Birthday");
+                String email = jsonObject.getString("Email");
+                String sex = jsonObject.getString("Sex");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

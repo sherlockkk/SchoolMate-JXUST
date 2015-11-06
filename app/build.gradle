@@ -24,5 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.google.code.gson:gson:2.4'
     compile files('libs/WelikeAndroid_V1.1.jar')
-
+    compile 'me.neavo:volley:2014.12.09'
 }

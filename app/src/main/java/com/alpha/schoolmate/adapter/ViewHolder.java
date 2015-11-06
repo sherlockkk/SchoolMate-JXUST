@@ -9,6 +9,9 @@ import android.widget.TextView;
 public class ViewHolder {
     public TextView mTvName;
     public TextView mTvMajor;
-    public ImageButton mIbDetail;
+    public TextView mTvSex;
+
+//    public TextView mKey;
+//    public TextView mValue;
 
 }

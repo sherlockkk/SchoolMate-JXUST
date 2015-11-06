@@ -17,13 +17,13 @@ import java.util.Map;
 /**
  * Created by SongJian on 2015/11/5 0005.
  */
-public class MyAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ViewHolder viewHolder = null;
+    private ViewHolder viewHolder  = new ViewHolder();
 
     private List<Map<String, Object>> mData = new ListActivity().getData();
 
-    public MyAdapter(Context context) {
+    public ListViewAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -47,17 +47,17 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.layout_listview, null);
             viewHolder.mTvName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.mTvMajor = (TextView) convertView.findViewById(R.id.major);
-            viewHolder.mIbDetail = (ImageButton) convertView.findViewById(R.id.detail);
+            viewHolder.mTvSex = (TextView) convertView.findViewById(R.id.sex);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.mTvName.setText((String)mData.get(position).get("name"));
         viewHolder.mTvMajor.setText((String)mData.get(position).get("major"));
+        viewHolder.mTvSex.setText((String)mData.get(position).get("sex"));
         return convertView;
     }
 }

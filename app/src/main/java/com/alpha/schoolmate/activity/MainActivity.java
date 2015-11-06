@@ -14,16 +14,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.alpha.schoolmate.MyApplication;
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.util.Config;
 import com.alpha.schoolmate.util.HttpUtils;
 import com.alpha.schoolmate.util.JsonUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.lody.welike.WelikeHttp;
 import com.lody.welike.http.HttpParams;
 import com.lody.welike.http.HttpRequest;
+import com.lody.welike.http.HttpResponse;
 import com.lody.welike.http.callback.HttpCallback;
+import com.lody.welike.http.callback.HttpResultCallback;
 import com.lody.welike.ui.WelikeToast;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,12 +79,13 @@ public class MainActivity extends Activity {
 
     OnClickListener onClickListener;
 
-    public String  name = null;
+    public String name = null;
     public String major = null;
     public String clazz = null;
     public String company = null;
     public String address = null;
     public String years = null;
+
     {
         onClickListener = new OnClickListener() {
 
@@ -95,23 +105,56 @@ public class MainActivity extends Activity {
 //                        progressDialog.setTitle("正在查询");
 //                        progressDialog.setMessage("查询中...");
 
-                       // WelikeHttp.getDefault().post(Config.URLPATH,);
+                        // WelikeHttp.getDefault().post(Config.URLPATH,);
+
 
                         toActivity();
                         break;
                 }
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("RealName", name);
-                params.put("SpecialityName", major);
-                params.put("ClassName", clazz);
-                params.put("Graduation", years);
-                params.put("WorkPlace", company);
-                params.put("Address", address);
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("RealName", name);
+//                params.put("SpecialityName", major);
+//                params.put("ClassName", clazz);
+//                params.put("Graduation", years);
+//                params.put("WorkPlace", company);
+//                params.put("Address", address);
                 //sendPost(params);
+/**
+ *
+ * 可用的请求方法
+ *
+ */
+//                WelikeHttp.getDefault().post(Config.URLPATH, new HttpParams().putAllParams(params), new HttpResultCallback() {
+//                    @Override
+//                    public void onSuccess(String content) {
+//                        super.onSuccess(content);
+//                        WelikeToast.toast(content);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(HttpResponse response) {
+//                        super.onFailure(response);
+//                        WelikeToast.toast(response.toString());
+//                        System.out.println(response);
+//                    }
+//                });
+
+//                WelikeHttp.getDefault().post(Config.URLPATH, (HttpParams) params, new HttpResultCallback() {
+//                    @Override
+//                    public void onSuccess(String content) {
+//                        super.onSuccess(content);
+//                        WelikeToast.toast(content);
+//                    }
+//                });
+
+
+                //sendPost(params);
+
+                volleyPost();
+
                 System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
                 JsonUtil jsonUtil = new JsonUtil();
-                jsonUtil.changeNotArrayDateToJson(params);
-
+                //jsonUtil.changeNotArrayDateToJson(params);
             }
         };
     }
@@ -119,6 +162,36 @@ public class MainActivity extends Activity {
     private void toActivity() {
         Intent intent = new Intent(MainActivity.this, ListActivity.class);
         startActivity(intent);
+    }
+
+    private void volleyPost() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URLPATH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                WelikeToast.toast(s);
+                System.out.println(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                WelikeToast.toast(volleyError.toString());
+                System.out.println(volleyError.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("RealName", name);
+                params.put("SpecialityName", major);
+                params.put("ClassName", clazz);
+                params.put("Graduation", years);
+                params.put("WorkPlace", company);
+                params.put("Address", address);
+                return params;
+            }
+        };
+        request.setTag("SJ_POST");
+        MyApplication.getHttpRequestQueue().add(request);
     }
 
 
