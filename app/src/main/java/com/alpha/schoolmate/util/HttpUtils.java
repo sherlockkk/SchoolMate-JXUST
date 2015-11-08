@@ -96,6 +96,9 @@ public class HttpUtils {
         return resultData;
     }
 
+    /**
+     * 发送post请求给服务器
+     */
 
     public static String SendRequest(String adress_Http, String strJson) {
 
