@@ -2,17 +2,10 @@ package com.alpha.schoolmate.util;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.alpha.schoolmate.activity.MainActivity;
+import com.alpha.schoolmate.entity.SchoolMate;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-import com.lody.welike.WelikeHttp;
-import com.lody.welike.http.HttpParams;
-import com.lody.welike.http.callback.HttpResultCallback;
-import com.lody.welike.ui.WelikeToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +13,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,26 +83,72 @@ public class JsonUtil {
         String jsonString2 = object.toString();//把JSONObject转换成json格式的字符串
         return jsonString2;
     }
+
     //解析json数组
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public String jsonArrayToString(JSONArray jsonData){
+    public List<Map<String, Object>> jsonArrayToString(JSONArray jsonData) {
+        String className = null;
+        String graduation = null;
+        String specialityName = null;
+        String workPlace = null;
+        String birthday = null;
+        String email = null;
+        String sex = null;
+        String address = null;
+        String handSet = null;
+        String headPicture = null;
+        String QQ = null;
+        String realName = null;
+        int userId = 0;
+
+        List<Map<String,Object>>mapList = new ArrayList<Map<String, Object>>();
+
         try {
-            JSONArray jsonArray = new JSONArray(jsonData);
-            for (int i = 0;i<jsonArray.length();i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String realName = jsonObject.getString("RealName");
-                String className = jsonObject.getString("ClassName");
-                String graduation = jsonObject.getString("Graduation");
-                String specialityName = jsonObject.getString("SpecialityName");
-                String workPlace = jsonObject.getString("WorkPlace");
-                String birthday = jsonObject.getString("Birthday");
-                String email = jsonObject.getString("Email");
-                String sex = jsonObject.getString("Sex");
+            //JSONArray jsonArray = new JSONArray(jsonData);
+            for (int i = 0; i < jsonData.length(); i++) {
+                Map<String,Object>map = new HashMap<>();
+                JSONObject jsonObject = jsonData.getJSONObject(i);
+                className = jsonObject.getString("ClassName");
+                graduation = jsonObject.getString("Graduation");
+                workPlace = jsonObject.getString("WorkPlace");
+                birthday = jsonObject.getString("Birthday");
+                email = jsonObject.getString("Email");
+                sex = jsonObject.getString("Sex");
+                address = jsonObject.getString("Address");
+                handSet = jsonObject.getString("Handset");
+                headPicture = jsonObject.getString("HeadPicture");
+                QQ = jsonObject.getString("QQ");
+                realName = jsonObject.getString("RealName");
+                specialityName = jsonObject.getString("SpecialityName");
+                userId = (int) jsonObject.get("UserID");
+
+
+                map.put("Graduation",graduation);
+                map.put("WorkPlace",workPlace);
+                map.put("Birthday",birthday);
+                map.put("Email",email);
+                map.put("Sex",sex);
+                map.put("Address",address);
+                map.put("Handset",handSet);
+                map.put("HeadPicture",headPicture);
+                map.put("QQ",QQ);
+                map.put("RealName",realName);
+                map.put("SpecialityName",specialityName);
+                map.put("ClassName",className);
+                map.put("UserID", userId);
+
+                mapList.add(map);
+
+
+
             }
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return mapList;
     }
 
 }

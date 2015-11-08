@@ -19,12 +19,16 @@ import java.util.Map;
  */
 public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ViewHolder viewHolder  = new ViewHolder();
+
 
     private List<Map<String, Object>> mData = new ListActivity().getData();
 
     public ListViewAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public ListViewAdapter() {
+
     }
 
     @Override
@@ -46,8 +50,12 @@ public class ListViewAdapter extends BaseAdapter {
     //返回的View即为列表框的View
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = new ViewHolder();
+
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.layout_listview, null);
+
+
             viewHolder.mTvName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.mTvMajor = (TextView) convertView.findViewById(R.id.major);
             viewHolder.mTvSex = (TextView) convertView.findViewById(R.id.sex);
@@ -55,9 +63,10 @@ public class ListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.mTvName.setText((String)mData.get(position).get("name"));
-        viewHolder.mTvMajor.setText((String)mData.get(position).get("major"));
-        viewHolder.mTvSex.setText((String)mData.get(position).get("sex"));
+        viewHolder.mTvName.setText((String) mData.get(position).get("name"));
+        viewHolder.mTvMajor.setText((String) mData.get(position).get("major"));
+        viewHolder.mTvSex.setText((String) mData.get(position).get("sex"));
+
         return convertView;
     }
 }

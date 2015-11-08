@@ -16,6 +16,7 @@ import android.widget.Spinner;
 
 import com.alpha.schoolmate.MyApplication;
 import com.alpha.schoolmate.R;
+import com.alpha.schoolmate.adapter.ListViewAdapter;
 import com.alpha.schoolmate.util.Config;
 import com.alpha.schoolmate.util.HttpUtils;
 import com.alpha.schoolmate.util.JsonUtil;
@@ -43,7 +44,9 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends Activity {
 
@@ -110,13 +113,6 @@ public class MainActivity extends Activity {
                         address = mEditText_address.getText().toString();
                         years = mSpinner.getSelectedItem().toString();
 
-//                        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-//                        progressDialog.setTitle("正在查询");
-//                        progressDialog.setMessage("查询中...");
-
-                        // WelikeHttp.getDefault().post(Config.URLPATH,);
-
-
                         toActivity();
                         break;
                 }
@@ -136,21 +132,23 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         HttpUtils httpUtils = new HttpUtils();
-                        httpUtils.SendRequest(Config.URLPATH, s);
+                        ListActivity.mapList= httpUtils.SendRequest(Config.URLPATH, s);
                     }
                 }).start();
             }
         };
     }
 
+    ListViewAdapter listViewAdapter = new ListViewAdapter();
+
+    public List<Map<String, Object>> getMapList(){
+
+        return null;
+    }
     private void toActivity() {
         Intent intent = new Intent(MainActivity.this, ListActivity.class);
         startActivity(intent);
     }
-
-
-
-
 
 
     OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {

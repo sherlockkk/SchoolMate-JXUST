@@ -1,6 +1,15 @@
 package com.alpha.schoolmate.util;
 
 
+import android.util.Log;
+
+import com.alpha.schoolmate.entity.SchoolMate;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -13,12 +22,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by SongJian on 2015/11/3 0003.
  */
 public class HttpUtils {
+
     /**
      * 发送post请求到服务器
      */
@@ -100,9 +111,9 @@ public class HttpUtils {
      * 发送post请求给服务器
      */
 
-    public static String SendRequest(String adress_Http, String strJson) {
+    public static List<Map<String, Object>> SendRequest(String adress_Http, String strJson) {
 
-        String returnLine = "";
+        String returnLine = null;
         try {
 
             System.out.println("**************开始http通讯**************");
@@ -111,42 +122,26 @@ public class HttpUtils {
             URL my_url = new URL(adress_Http);
             HttpURLConnection connection = (HttpURLConnection) my_url.openConnection();
             connection.setDoOutput(true);
-
             connection.setDoInput(true);
-
             connection.setRequestMethod("POST");
-
             connection.setUseCaches(false);
-
             connection.setInstanceFollowRedirects(true);
-
             //connection.setRequestProperty("Content-Type", "application/json");
-
             connection.connect();
-
             DataOutputStream out = new DataOutputStream(connection
                     .getOutputStream());
-
             byte[] content = strJson.getBytes("utf-8");
-
             out.write(content, 0, content.length);
             out.flush();
             out.close(); // flush and close
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
-
             //StringBuilder builder = new StringBuilder();
-
-            String line = "";
-
+            String line;
             System.out.println("Contents of post request start");
-
             while ((line = reader.readLine()) != null) {
-                // line = new String(line.getBytes(), "utf-8");
+                line = new String(line.getBytes(), "utf-8");
                 returnLine += line;
-
                 System.out.println(line);
-
             }
 
             System.out.println("Contents of post request ends");
@@ -155,11 +150,25 @@ public class HttpUtils {
             connection.disconnect();
             System.out.println("========返回的结果的为========" + returnLine);
 
+
+            try {
+                JsonUtil jsonUtil = new JsonUtil();
+                JSONArray jsonArray = new JSONArray(returnLine.substring(4));
+                Log.i("cc", returnLine.substring(4));
+                Log.i("cc", jsonArray.toString());
+
+                List<Map<String,Object>> schoolMateList = jsonUtil.jsonArrayToString(jsonArray);
+                return schoolMateList;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
 
-        return returnLine;
 
     }
+
+
 }

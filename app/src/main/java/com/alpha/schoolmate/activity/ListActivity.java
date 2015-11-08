@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.adapter.ListViewAdapter;
+import com.alpha.schoolmate.entity.SchoolMate;
+import com.alpha.schoolmate.util.JsonUtil;
 import com.lody.welike.ui.WelikeToast;
 
 import java.util.ArrayList;
@@ -19,10 +21,11 @@ import java.util.Map;
  * Created by SongJian on 2015/11/4 0004.
  */
 public class ListActivity extends Activity {
-    public static String title[] = new String[]{"腾腾", "钟波"};
-    public static String info[] = new String[]{"通信工程", "材料科学与技术"};
-    public static String sex[] = new String[]{"女","男"};
+//    public static String name[] = new String[]{"腾腾", "钟波"};
+//    public static String major[] = new String[]{"通信工程", "材料科学与技术"};
+//    public static String sex[] = new String[]{"女","男"};
 
+    public static SchoolMate schoolMate = new SchoolMate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +41,25 @@ public class ListActivity extends Activity {
         listView.setOnItemClickListener(onItemClickListener);
     }
 
+    public static List<Map<String, Object>> mapList;
 
     //动态获取数据源，可以是数组，json等
     public List<Map<String, Object>> getData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < title.length; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", title[i]);
-            map.put("major", info[i]);
-            map.put("sex",sex[i]);
-            list.add(map);
+        List<Map<String, Object>> datamaps = new ArrayList<>();
+        if (mapList != null) {
+
+            for (int i = 0; i < mapList.size(); i++) {
+
+                Map<String, Object> map = mapList.get(i);
+                Map<String, Object> dataMap = new HashMap<>();
+                dataMap.put("name", map.get("RealName"));
+                dataMap.put("major", map.get("SpecialityName"));
+                dataMap.put("sex", map.get("Sex"));
+                datamaps.add(dataMap);
+            }
+            //return datamaps;
         }
-        return list;
+        return datamaps;
     }
 
 
