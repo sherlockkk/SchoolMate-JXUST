@@ -87,7 +87,6 @@ public class JsonUtil {
             e.printStackTrace();
         }
         String jsonString2 = object.toString();//把JSONObject转换成json格式的字符串
-        Log.i("sj", "转换成json字符串: " + jsonString2);
         return jsonString2;
     }
     //解析json数组

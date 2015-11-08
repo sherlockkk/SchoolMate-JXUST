@@ -25,4 +25,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile files('libs/WelikeAndroid_V1.1.jar')
     compile 'me.neavo:volley:2014.12.09'
+    compile files('libs/okhttp-2.5.0.jar')
 }

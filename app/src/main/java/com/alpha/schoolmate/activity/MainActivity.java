@@ -31,8 +31,17 @@ import com.lody.welike.http.HttpResponse;
 import com.lody.welike.http.callback.HttpCallback;
 import com.lody.welike.http.callback.HttpResultCallback;
 import com.lody.welike.ui.WelikeToast;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,50 +120,25 @@ public class MainActivity extends Activity {
                         toActivity();
                         break;
                 }
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("RealName", name);
-//                params.put("SpecialityName", major);
-//                params.put("ClassName", clazz);
-//                params.put("Graduation", years);
-//                params.put("WorkPlace", company);
-//                params.put("Address", address);
-                //sendPost(params);
-/**
- *
- * 可用的请求方法
- *
- */
-//                WelikeHttp.getDefault().post(Config.URLPATH, new HttpParams().putAllParams(params), new HttpResultCallback() {
-//                    @Override
-//                    public void onSuccess(String content) {
-//                        super.onSuccess(content);
-//                        WelikeToast.toast(content);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpResponse response) {
-//                        super.onFailure(response);
-//                        WelikeToast.toast(response.toString());
-//                        System.out.println(response);
-//                    }
-//                });
-
-//                WelikeHttp.getDefault().post(Config.URLPATH, (HttpParams) params, new HttpResultCallback() {
-//                    @Override
-//                    public void onSuccess(String content) {
-//                        super.onSuccess(content);
-//                        WelikeToast.toast(content);
-//                    }
-//                });
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("RealName", name);
+                params.put("SpecialityName", major);
+                params.put("ClassName", clazz);
+                params.put("Graduation", years);
+                params.put("WorkPlace", company);
+                params.put("Address", address);
 
 
-                //sendPost(params);
-
-                volleyPost();
-
-                System.out.println(name + " " + major + " " + clazz + " " + company + " " + address + " " + years);
                 JsonUtil jsonUtil = new JsonUtil();
-                //jsonUtil.changeNotArrayDateToJson(params);
+                final String s = jsonUtil.changeNotArrayDateToJson(params);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HttpUtils httpUtils = new HttpUtils();
+                        httpUtils.SendRequest(Config.URLPATH, s);
+                    }
+                }).start();
             }
         };
     }
@@ -164,41 +148,10 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void volleyPost() {
-        StringRequest request = new StringRequest(Request.Method.POST, Config.URLPATH, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                WelikeToast.toast(s);
-                System.out.println(s);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                WelikeToast.toast(volleyError.toString());
-                System.out.println(volleyError.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("RealName", name);
-                params.put("SpecialityName", major);
-                params.put("ClassName", clazz);
-                params.put("Graduation", years);
-                params.put("WorkPlace", company);
-                params.put("Address", address);
-                return params;
-            }
-        };
-        request.setTag("SJ_POST");
-        MyApplication.getHttpRequestQueue().add(request);
-    }
 
 
-    private void sendPost(Map<String, String> params) {
-        String urlPath = Config.URLPATH;
-        HttpUtils.submitPostData(urlPath, params, "utf-8");
-    }
+
+
 
     OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {
 
