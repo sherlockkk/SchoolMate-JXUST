@@ -44,6 +44,15 @@ public class ListActivity extends Activity {
 
     public static List<Map<String, Object>> mapList;
 
+    //获取UserId
+    public int getUserId(){
+        int id=0;
+        for (int i = 0; i < mapList.size(); i++) {
+            id = (int) mapList.get(i).get("UserId");
+        }
+        return id;
+    }
+
     //动态获取数据源，可以是数组，json等
     public List<Map<String, Object>> getData() {
         List<Map<String, Object>> datamaps = new ArrayList<>();
@@ -73,7 +82,7 @@ public class ListActivity extends Activity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-                WelikeToast.toast("点击事件");
+                WelikeToast.toast("点击事件"+getUserId());
         }
     };
 
