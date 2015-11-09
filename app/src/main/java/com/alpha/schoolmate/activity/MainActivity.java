@@ -106,12 +106,12 @@ public class MainActivity extends Activity {
 
                 switch (v.getId()) {
                     case R.id.submit:
-                        name = mEditText_name.getText().toString();
-                        major = mEditText_major.getText().toString();
-                        clazz = mEditText_clazz.getText().toString();
-                        company = mEditText_company.getText().toString();
-                        address = mEditText_address.getText().toString();
-                        years = mSpinner.getSelectedItem().toString();
+                        name = mEditText_name.getText().toString().trim();
+                        major = mEditText_major.getText().toString().trim();
+                        clazz = mEditText_clazz.getText().toString().trim();
+                        company = mEditText_company.getText().toString().trim();
+                        address = mEditText_address.getText().toString().trim();
+                        years = mSpinner.getSelectedItem().toString().trim();
 
                         toActivity();
                         break;
@@ -139,12 +139,7 @@ public class MainActivity extends Activity {
         };
     }
 
-    ListViewAdapter listViewAdapter = new ListViewAdapter();
 
-    public List<Map<String, Object>> getMapList(){
-
-        return null;
-    }
     private void toActivity() {
         Intent intent = new Intent(MainActivity.this, ListActivity.class);
         startActivity(intent);

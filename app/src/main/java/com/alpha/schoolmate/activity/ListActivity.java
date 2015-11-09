@@ -39,6 +39,7 @@ public class ListActivity extends Activity {
         ListViewAdapter myAdapter = new ListViewAdapter(this);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onItemClickListener);
+        listView.setOnClickListener(onClickListener);
     }
 
     public static List<Map<String, Object>> mapList;
@@ -57,7 +58,6 @@ public class ListActivity extends Activity {
                 dataMap.put("sex", map.get("Sex"));
                 datamaps.add(dataMap);
             }
-            //return datamaps;
         }
         return datamaps;
     }
@@ -66,7 +66,14 @@ public class ListActivity extends Activity {
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            WelikeToast.toast("您点击了第" + (position + 1) + "条信息");
+            //WelikeToast.toast("您点击了第" + (position + 1) + "条信息");
+        }
+    };
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                WelikeToast.toast("点击事件");
         }
     };
 
