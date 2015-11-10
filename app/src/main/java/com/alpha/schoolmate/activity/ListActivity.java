@@ -39,7 +39,6 @@ public class ListActivity extends Activity {
         ListViewAdapter myAdapter = new ListViewAdapter(this);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onItemClickListener);
-        listView.setOnClickListener(onClickListener);
     }
 
     public static List<Map<String, Object>> mapList;
@@ -47,8 +46,10 @@ public class ListActivity extends Activity {
     //获取UserId
     public int getUserId(){
         int id=0;
+
+
         for (int i = 0; i < mapList.size(); i++) {
-            id = (int) mapList.get(i).get("UserId");
+            id = (int) mapList.get(i).get("UserID");
         }
         return id;
     }
@@ -65,6 +66,7 @@ public class ListActivity extends Activity {
                 dataMap.put("name", map.get("RealName"));
                 dataMap.put("major", map.get("SpecialityName"));
                 dataMap.put("sex", map.get("Sex"));
+                dataMap.put("UserID",map.get("UserID"));
                 datamaps.add(dataMap);
             }
         }
@@ -76,14 +78,10 @@ public class ListActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //WelikeToast.toast("您点击了第" + (position + 1) + "条信息");
+            //WelikeToast.toast("UserID  "+new ListViewAdapter(this).getItemId());
+            return;
         }
     };
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-                WelikeToast.toast("点击事件"+getUserId());
-        }
-    };
 
 }

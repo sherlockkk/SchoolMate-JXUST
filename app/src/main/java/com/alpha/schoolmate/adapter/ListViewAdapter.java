@@ -1,6 +1,7 @@
 package com.alpha.schoolmate.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.alpha.schoolmate.R;
 import com.alpha.schoolmate.activity.ListActivity;
+import com.lody.welike.ui.WelikeToast;
 
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,8 @@ public class ListViewAdapter extends BaseAdapter {
     //返回的ID即为列表项的ID
     @Override
     public long getItemId(int position) {
+        position = (int) mData.get(position).get("UserID");
+        Log.i("cccc",position+"");
         return position;
     }
 
@@ -67,6 +71,8 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.mTvMajor.setText((String) mData.get(position).get("major"));
         viewHolder.mTvSex.setText((String) mData.get(position).get("sex"));
 
+
+        //WelikeToast.toast("UserID  " + mData.get(position).get("UserID"));
         return convertView;
     }
 }
