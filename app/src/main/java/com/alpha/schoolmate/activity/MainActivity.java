@@ -114,6 +114,8 @@ public class MainActivity extends Activity {
                         years = mSpinner.getSelectedItem().toString().trim();
 
                         toActivity();
+
+
                         break;
                 }
                 Map<String, String> params = new HashMap<String, String>();
@@ -132,7 +134,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         HttpUtils httpUtils = new HttpUtils();
-                        ListActivity.mapList= httpUtils.SendRequest(Config.URLPATH, s);
+                        ListActivity.mapList = httpUtils.SendRequest(Config.URLPATH, s);
                     }
                 }).start();
             }

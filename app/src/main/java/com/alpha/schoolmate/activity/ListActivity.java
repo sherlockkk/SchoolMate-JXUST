@@ -1,7 +1,11 @@
 package com.alpha.schoolmate.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,34 +29,23 @@ public class ListActivity extends Activity {
 //    public static String major[] = new String[]{"通信工程", "材料科学与技术"};
 //    public static String sex[] = new String[]{"女","男"};
 
-    public static SchoolMate schoolMate = new SchoolMate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
         initWidget();
     }
-
     public void initWidget() {
         ListView listView = (ListView) findViewById(R.id.listview);
-        ListViewAdapter myAdapter = new ListViewAdapter(this);
+        final ListViewAdapter myAdapter = new ListViewAdapter(this);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onItemClickListener);
+       // myAdapter.notifyDataSetChanged();
     }
 
     public static List<Map<String, Object>> mapList;
-
-    //获取UserId
-    public int getUserId(){
-        int id=0;
-
-
-        for (int i = 0; i < mapList.size(); i++) {
-            id = (int) mapList.get(i).get("UserID");
-        }
-        return id;
-    }
 
     //动态获取数据源，可以是数组，json等
     public List<Map<String, Object>> getData() {
@@ -66,7 +59,7 @@ public class ListActivity extends Activity {
                 dataMap.put("name", map.get("RealName"));
                 dataMap.put("major", map.get("SpecialityName"));
                 dataMap.put("sex", map.get("Sex"));
-                dataMap.put("UserID",map.get("UserID"));
+                dataMap.put("UserID", map.get("UserID"));
                 datamaps.add(dataMap);
             }
         }
@@ -83,5 +76,9 @@ public class ListActivity extends Activity {
         }
     };
 
+    public void toActivity(Class clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
+    }
 
 }

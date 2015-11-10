@@ -101,12 +101,12 @@ public class JsonUtil {
         String realName = null;
         int userId = 0;
 
-        List<Map<String,Object>>mapList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 
         try {
             //JSONArray jsonArray = new JSONArray(jsonData);
             for (int i = 0; i < jsonData.length(); i++) {
-                Map<String,Object>map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>();
                 JSONObject jsonObject = jsonData.getJSONObject(i);
                 className = jsonObject.getString("ClassName");
                 graduation = jsonObject.getString("Graduation");
@@ -123,32 +123,69 @@ public class JsonUtil {
                 userId = (int) jsonObject.get("UserID");
 
 
-                map.put("Graduation",graduation);
-                map.put("WorkPlace",workPlace);
-                map.put("Birthday",birthday);
-                map.put("Email",email);
-                map.put("Sex",sex);
-                map.put("Address",address);
-                map.put("Handset",handSet);
-                map.put("HeadPicture",headPicture);
-                map.put("QQ",QQ);
-                map.put("RealName",realName);
-                map.put("SpecialityName",specialityName);
-                map.put("ClassName",className);
+                map.put("Graduation", graduation);
+                map.put("WorkPlace", workPlace);
+                map.put("Birthday", birthday);
+                map.put("Email", email);
+                map.put("Sex", sex);
+                map.put("Address", address);
+                map.put("Handset", handSet);
+                map.put("HeadPicture", headPicture);
+                map.put("QQ", QQ);
+                map.put("RealName", realName);
+                map.put("SpecialityName", specialityName);
+                map.put("ClassName", className);
                 map.put("UserID", userId);
 
                 mapList.add(map);
-
-
-
             }
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return mapList;
     }
 
+    /**
+     * 解析json对象
+     *
+     * @param jsonObject
+     * @return
+     */
+    /*
+{
+    "Address": "",
+    "Birthday": "",
+    "ClassName": "1班",
+    "Email": "",
+    "Graduation": "2009",
+    "Handset": "",
+    "HeadPicture": "../images/likeness/men_tiny.gif",
+    "QQ": "",
+    "RealName": "张学文",
+    "Sex": "男",
+    "SpecialityName": "测绘工程",
+    "UserID": 151433,
+    "WorkPlace": ""
+}
+     */
+    public Map<String, String> jsonObjectToString(JSONObject jsonObject) {
+        Map<String, String> map = new HashMap<>();
+        try {
+            map.put("Address",jsonObject.getString("Address"));
+            map.put("Birthday",jsonObject.getString("Birthday"));
+            map.put("ClassName",jsonObject.getString("ClassName"));
+            map.put("Email",jsonObject.getString("Email"));
+            map.put("Graduation",jsonObject.getString("Graduation"));
+            map.put("Handset",jsonObject.getString("Handset"));
+            map.put("HeadPicture",jsonObject.getString("HeadPicture"));
+            map.put("QQ",jsonObject.getString("QQ"));
+            map.put("RealName",jsonObject.getString("RealName"));
+            map.put("Sex",jsonObject.getString("Sex"));
+            map.put("SpecialityName",jsonObject.getString("SpecialityName"));
+            map.put("WorkPlace",jsonObject.getString("WorkPlace"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
 }

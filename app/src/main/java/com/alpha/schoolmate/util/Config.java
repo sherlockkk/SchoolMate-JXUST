@@ -5,4 +5,5 @@ package com.alpha.schoolmate.util;
  */
 public class Config {
     public static final String URLPATH = "http://192.168.23.1:8888/Service/getFellows";
+    public static final String GET_URL = "http://192.168.23.1:8888/Service/getFellowDetail";
 }
